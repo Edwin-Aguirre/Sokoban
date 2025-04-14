@@ -11,9 +11,21 @@ config_version=5
 [application]
 
 config/name="Sokoban"
+config/tags=PackedStringArray("udemy")
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
-config/tags=PackedStringArray("udemy")
+
+[autoload]
+
+LevelData="*res://globals/level_data.gd"
+GameManager="*res://globals/game_manager.gd"
+
+[display]
+
+window/size/viewport_width=1024
+window/size/viewport_height=768
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
 
 [rendering]
 
