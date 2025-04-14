@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqh6fwly328vk"]
+
+[ext_resource type="Texture2D" uid="uid://b51fslkc5e86a" path="res://assets/backgrounds/background_brown.png" id="1_h3e3j"]
+
+[node name="Level" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_h3e3j")
+stretch_mode = 1

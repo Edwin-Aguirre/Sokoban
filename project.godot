@@ -12,6 +12,7 @@ config_version=5
 
 config/name="Sokoban"
 config/tags=PackedStringArray("udemy")
+run/main_scene="uid://c75cc8bbxc1af"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
@@ -26,6 +27,7 @@ window/size/viewport_width=1024
 window/size/viewport_height=768
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
+mouse_cursor/custom_image="uid://o2c24fjcrul0"
 
 [rendering]
 
