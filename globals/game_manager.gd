@@ -1,19 +1,21 @@
 extends Node
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+const LEVEL = preload("res://scenes/level/level.tscn")
+const MAIN = preload("res://scenes/main/main.tscn")
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
+var _level_selected: String = "1"
+
+
+func get_level_selected() -> String:
+	return _level_selected
+
+
+func load_level_scene(level_number: String) -> void:
+	_level_selected = level_number
+	get_tree().change_scene_to_packed(LEVEL)
 
 
 func load_main_scene() -> void:
-	pass
-
-
-func load_level_scene() -> void:
-	pass
+	get_tree().change_scene_to_packed(MAIN)

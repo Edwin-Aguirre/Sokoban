@@ -11,6 +11,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 0
 texture = ExtResource("1_m5ckn")
 script = ExtResource("2_c5ob8")
 
@@ -41,3 +42,7 @@ offset_right = 20.0
 offset_bottom = 18.4
 texture = ExtResource("3_fe81u")
 expand_mode = 1
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
