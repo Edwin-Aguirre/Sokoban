@@ -40,7 +40,8 @@ tile_set = ExtResource("3_i166f")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(512, 384)
-zoom = Vector2(0.8, 0.8)
+zoom = Vector2(0.81, 0.81)
 
 [node name="Player" parent="." instance=ExtResource("4_qkmgm")]
 position = Vector2(288, 224)
+frame_progress = 0.0

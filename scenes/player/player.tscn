@@ -112,5 +112,6 @@ animations = [{
 [node name="Player" type="AnimatedSprite2D"]
 sprite_frames = SubResource("SpriteFrames_ugbui")
 animation = &"down"
+autoplay = "down"
 frame_progress = 0.836151
 offset = Vector2(32, 32)

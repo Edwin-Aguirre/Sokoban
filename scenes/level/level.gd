@@ -17,16 +17,78 @@ var _tile_size: int = 0
 var _player_tile: Vector2i = Vector2i.ZERO
 
 
+func get_input_direction() -> Vector2i:
+	var move_dir = Vector2i.ZERO
+	
+	if Input.is_action_just_pressed("ui_left"):
+		move_dir = Vector2i.LEFT
+		player.animation = "left"
+	elif Input.is_action_just_pressed("ui_right"):
+		move_dir = Vector2i.RIGHT
+		player.animation = "right"
+	elif Input.is_action_just_pressed("ui_up"):
+		move_dir = Vector2i.UP
+		player.animation = "up"
+	elif Input.is_action_just_pressed("ui_down"):
+		move_dir = Vector2i.DOWN
+		player.animation = "down"
+	
+	return move_dir
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("exit"):
 		GameManager.load_main_scene()
 	if event.is_action_pressed("reload"):
 		get_tree().reload_current_scene()
+	
+	var move_dir: Vector2i = get_input_direction()
+	if move_dir != Vector2i.ZERO:
+		player_move(move_dir)
+
+
+func cell_is_wall(cell: Vector2i) -> bool:
+	return cell in walls_tiles.get_used_cells()
+
+
+func cell_is_box(cell: Vector2i) -> bool:
+	return cell in boxes_tiles.get_used_cells()
+
+
+func cell_is_empty(cell: Vector2i) -> bool:
+	return !cell_is_box(cell) and !cell_is_wall(cell)
+
+
+func box_can_move(box_tile: Vector2i, dir: Vector2i) -> bool:
+	return cell_is_empty(box_tile + dir)
+
+
+func move_box(box_tile: Vector2i, move_dir: Vector2i) -> void:
+	var destination: Vector2i = box_tile + move_dir
+	boxes_tiles.erase_cell(box_tile)
+	
+	var tlt: TileLayers.LayerType = TileLayers.LayerType.Boxes
+	
+	if destination in targets_tiles.get_used_cells():
+		tlt = TileLayers.LayerType.TargetBoxes
+	
+	boxes_tiles.set_cell(destination, SOURCE_ID, get_atlas_coord(tlt))
+
+
+func player_move(move_dir: Vector2i) -> void:
+	var destination: Vector2i = _player_tile + move_dir
+	
+	if cell_is_wall(destination): return
+	if cell_is_box(destination) and !box_can_move(destination, move_dir): return
+	
+	if cell_is_box(destination):
+		move_box(destination, move_dir)
+	
+	place_player_on_tile(destination)
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print("Level Loaded: ", GameManager.get_level_selected())
 	_tile_size = floor_tiles.tile_set.tile_size.x
 	setup_level()
 
