@@ -11,10 +11,14 @@ const SOURCE_ID: int = 0
 @onready var boxes_tiles: TileMapLayer = $TileLayers/Boxes
 @onready var camera_2d: Camera2D = $Camera2D
 @onready var player: AnimatedSprite2D = $Player
+@onready var game_ui: GameUI = $CanvasLayer2/GameUI
 
 
 var _tile_size: int = 0
 var _player_tile: Vector2i = Vector2i.ZERO
+var _game_over: bool = false
+var _level: String = "1"
+var _moves_made: int = 0
 
 
 func get_input_direction() -> Vector2i:
@@ -41,6 +45,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		GameManager.load_main_scene()
 	if event.is_action_pressed("reload"):
 		get_tree().reload_current_scene()
+	
+	if _game_over:
+		return
 	
 	var move_dir: Vector2i = get_input_direction()
 	if move_dir != Vector2i.ZERO:
@@ -75,6 +82,15 @@ func move_box(box_tile: Vector2i, move_dir: Vector2i) -> void:
 	boxes_tiles.set_cell(destination, SOURCE_ID, get_atlas_coord(tlt))
 
 
+func check_game_state() -> void:
+	for tile in targets_tiles.get_used_cells():
+		if !cell_is_box(tile):
+			return
+	_game_over = true
+	var best: bool = GameManager.level_completed(_level, _moves_made)
+	game_ui.game_over(_moves_made, best)
+
+
 func player_move(move_dir: Vector2i) -> void:
 	var destination: Vector2i = _player_tile + move_dir
 	
@@ -85,11 +101,15 @@ func player_move(move_dir: Vector2i) -> void:
 		move_box(destination, move_dir)
 	
 	place_player_on_tile(destination)
+	_moves_made += 1
+	game_ui.set_moves_label(_moves_made)
+	check_game_state()
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_tile_size = floor_tiles.tile_set.tile_size.x
+	game_ui.set_moves_label(_moves_made)
 	setup_level()
 
 
@@ -136,8 +156,8 @@ func move_camera() -> void:
 
 
 func setup_level() -> void:
-	var level_number: String = GameManager.get_level_selected()
-	var level_layout: LevelLayout = LevelData.get_level_data(level_number)
+	_level = GameManager.get_level_selected()
+	var level_layout: LevelLayout = LevelData.get_level_data(_level)
 	clear_tiles()
 	
 	setup_layer(TileLayers.LayerType.Floor, floor_tiles, level_layout)

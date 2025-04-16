@@ -4,11 +4,12 @@ extends NinePatchRect
 class_name LevelButton
 
 
-const BUTTON_SQUARE_DEPTH_FLAT = preload("res://assets/ui/button_square_depth_flat.png")
-const BUTTON_SQUARE_DEPTH_GRADIENT = preload("res://assets/ui/button_square_depth_gradient.png")
+const BUTTON_SQUARE_DEPTH_FLAT = preload("res://assets/ui/blue_button_square_depth_flat.png")
+const BUTTON_SQUARE_DEPTH_GRADIENT = preload("res://assets/ui/blue_button_square_depth_gradient.png")
 
 
 @onready var level_label: Label = $LevelLabel
+@onready var checkmark: TextureRect = $Checkmark
 
 
 var _level_number: String = "0"
@@ -17,6 +18,7 @@ var _level_number: String = "0"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	level_label.text = _level_number
+	checkmark.visible = GameManager.has_level_score(_level_number)
 
 
 func setup(level_number: String) -> void:

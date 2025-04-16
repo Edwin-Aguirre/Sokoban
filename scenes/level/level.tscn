@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=4 uid="uid://bqh6fwly328vk"]
+[gd_scene load_steps=6 format=4 uid="uid://bqh6fwly328vk"]
 
 [ext_resource type="Texture2D" uid="uid://b51fslkc5e86a" path="res://assets/backgrounds/background_brown.png" id="1_h3e3j"]
 [ext_resource type="Script" uid="uid://bioa26bxoxu05" path="res://scenes/level/level.gd" id="1_nbgty"]
 [ext_resource type="TileSet" uid="uid://bgv8w1kjhgehx" path="res://resources/tile_set.tres" id="3_i166f"]
 [ext_resource type="PackedScene" uid="uid://c8h532jydgjdr" path="res://scenes/player/player.tscn" id="4_qkmgm"]
+[ext_resource type="PackedScene" uid="uid://bqk78maoeqp8o" path="res://scenes/game_ui/game_ui.tscn" id="5_hnne4"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_nbgty")
@@ -45,3 +46,7 @@ zoom = Vector2(0.81, 0.81)
 [node name="Player" parent="." instance=ExtResource("4_qkmgm")]
 position = Vector2(288, 224)
 frame_progress = 0.0
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="GameUI" parent="CanvasLayer2" instance=ExtResource("5_hnne4")]
